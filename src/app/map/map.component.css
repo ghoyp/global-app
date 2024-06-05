@@ -1,0 +1,10 @@
+path {
+    fill: lightblue;
+    stroke: black;
+    cursor: pointer;
+  }
+  
+  path.hovered {
+    fill: orange; /* Change this to the desired hover color */
+  }
+  
