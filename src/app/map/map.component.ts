@@ -1,14 +1,19 @@
+// map.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { CountryService } from '../country.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  styleUrls: ['./map.component.css'],
+  standalone: true,
+  imports: []
 })
 export class MapComponent implements OnInit {
   countryInfo: any;
   hoveredCountry: string | null = null;
+class: any;
 
   constructor(private countryService: CountryService) { }
 
@@ -16,24 +21,25 @@ export class MapComponent implements OnInit {
 
   onMouseOver(event: MouseEvent): void {
     const target = event.target as SVGElement;
-    this.hoveredCountry = target.id;
+    this.hoveredCountry = target ? target.id : null;
   }
 
-  onMouseOut(event: MouseEvent): void {
+  onMouseOut(): void {
     this.hoveredCountry = null;
   }
 
   onClick(event: MouseEvent): void {
     const countryName = this.getCountryNameFromEvent(event);
-    console.log('Country clicked:', countryName);
-    this.countryService.getCountryInfo(countryName).subscribe(data => {
-      this.countryInfo = data;
-    });
+    if (countryName) {
+      this.countryService.getCountryInfo(countryName).subscribe(data => {
+        this.countryInfo = data;
+      });
+    }
   }
 
-  getCountryNameFromEvent(event: MouseEvent): string {
+  getCountryNameFromEvent(event: MouseEvent): string | null {
     const target = event.target as SVGElement;
-    return target.id;
+    return target ? target.id : null;
   }
 
   isHovered(countryId: string): boolean {

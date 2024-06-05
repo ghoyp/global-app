@@ -1,14 +1,8 @@
-import { Routes, RouterModule } from '@angular/router';
-import { NgModule } from '@angular/core';
+// app.routes.ts
+
+import { Routes } from '@angular/router';
 import { MapComponent } from './map/map.component';
 
-const routes: Routes = [
-  { path: '', component: MapComponent },  // Default route
-  // Add other routes here if necessary
+export const routes: Routes = [
+  { path: '', component: MapComponent },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
