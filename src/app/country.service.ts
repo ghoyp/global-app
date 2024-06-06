@@ -1,28 +1,28 @@
 // country.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-  private apiUrl = 'http://api.geonames.org/postalCodeCountryInfo?username=demo';
+  getCountryInfo(countryCode: string, username: string, apiKey: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  private apiUrl = 'api.geonames.org/findNearbyPostalCodesJSON?postalcode=8775&country=CH&radius=10&username=maikins';
 
   constructor(private http: HttpClient) { }
 
-  getCountryInfo(countryName: string): Observable<any> {
-    const url = `${this.apiUrl}&country=${countryName}`;
-    return this.http.get(url).pipe(
-      map((response: any) => {
-        // Assuming the response is structured in a way we need to extract relevant info
-        // Adjust this mapping based on the actual API response
-        return {
-          countryName: response.geonames[0].countryName,
-        };
-      })
-    );
+  getCountryInfoByCode(countryCode: string, username: string, apiKey: string): Observable<any> {
+    const url = `${this.apiUrl}/countryInfoJSON?country=${countryCode}&username=${username}`;
+    return this.http.get(url);
+  }
+
+  findNearbyPostalCodes(postalCode: string, country: string, radius: number, username: string, apiKey: string): Observable<any> {
+    const url = `${this.apiUrl}/findNearbyPostalCodesJSON?postalcode=${postalCode}&country=${country}&radius=${radius}&username=${username}`;
+    return this.http.get(url);
   }
 }
